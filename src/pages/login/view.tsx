@@ -1,9 +1,10 @@
 import { FC, memo } from "react";
 interface ViewProps {
   listCity: string[];
+  onLogin: () => void;
 }
 
-const View: FC<ViewProps> = ({ listCity }) => {
+const View: FC<ViewProps> = ({ listCity,onLogin }) => {
   return (
     <>
       <div className="h-screen flex items-center justify-center">
@@ -46,7 +47,7 @@ const View: FC<ViewProps> = ({ listCity }) => {
             <input type="text" className="grow" placeholder="daisy@site.com" />
           </label>
           <div className="flex justify-center">
-            <button className="btn btn-wide">Button</button>
+            <button className="btn btn-wide" onClick={onLogin}>Button</button>
           </div>
           {/* {listCity.map((e) => {
               return <p>{e}</p>;

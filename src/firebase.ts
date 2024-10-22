@@ -23,3 +23,13 @@ export async function getCities() {
   const cityList = citySnapshot.docs.map((doc) => doc.data());
   return cityList;
 }
+
+
+export async function getCandidates() {
+  // const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const citiesCol = collection(db, "candidates");
+  const citySnapshot = await getDocs(citiesCol);
+  const cityList = citySnapshot.docs.map((doc) => doc.data());
+  return cityList;
+}
