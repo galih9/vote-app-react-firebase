@@ -1,4 +1,10 @@
-import { getCandidates, getCities } from "../../firebase";
+import { useUser } from "../../hooks/useUser";
+import {
+  commenceVote,
+  getCandidates,
+  getCities,
+  getUserDetail,
+} from "../../services/firebase";
 import View from "./view";
 import React, { useEffect, useState } from "react";
 
@@ -10,10 +16,19 @@ export interface ICandidates {
 
 const VotePage = () => {
   const [candidates, setCandidates] = useState<ICandidates[]>([]);
+  const [voteStatus, setVoteStatus] = useState(false);
+  const [voteLoading, setLoading] = useState(false);
+
+  const { getUserId } = useUser();
 
   const fetchData = async () => {
     const data = await getCandidates();
     var datas: ICandidates[] = [];
+    const id = getUserId();
+    if (id) {
+      const users = await getUserDetail(id);
+      setVoteStatus(users?.data().voteStatus ?? false);
+    }
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
       datas.push({
@@ -22,6 +37,7 @@ const VotePage = () => {
         voteCount: element.voteCount,
       });
     }
+
     setCandidates(datas);
   };
 
@@ -29,7 +45,28 @@ const VotePage = () => {
     fetchData();
   }, []);
 
-  return <View listCandidates={candidates} />;
+  return (
+    <View
+      listCandidates={candidates}
+      voteStatus={voteStatus}
+      onRevote={() => {
+        setVoteStatus(false);
+      }}
+      isLoading={voteLoading}
+      onVote={async (e) => {
+        const id = getUserId();
+        if (id) {
+          const users = await getUserDetail(id);
+          if (users) {
+            setLoading(true)
+            console.log(users?.data(),e);
+            await commenceVote(users?.data().uid, e);
+            setLoading(false)
+          }
+        }
+      }}
+    />
+  );
 };
 
 export default VotePage;

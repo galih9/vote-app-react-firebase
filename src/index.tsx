@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-        <Toaster position="top-right" toastOptions={{ duration: 5000 }} />
+        <Toaster position="bottom-right" toastOptions={{ duration: 5000}} />
         <App />
     </BrowserRouter>
   </React.StrictMode>

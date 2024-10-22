@@ -1,31 +1,53 @@
 import { useNavigate } from "react-router-dom";
-import { getCities } from "../../firebase";
+import { getCities, logInWithEmailAndPassword } from "../../services/firebase";
 import View from "./view";
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+
+export interface ILogin {
+  email: string;
+  password: string;
+}
 
 const LoginPage = () => {
-  const [city, setCity] = useState<string[]>([]);
+  const [form, setForm] = useState<ILogin>({
+    email: "",
+    password: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const fetchData = async () => {
-    const data = await getCities();
-    var datas: string[] = [];
-    for (let i = 0; i < data.length; i++) {
-      const element = data[i];
-      datas.push(element.name);
-    }
-    setCity(datas);
+  const { login } = useAuth();
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+
+    await logInWithEmailAndPassword(form.email, form.password).then((v) => {
+      if (v) {
+        const userData = {
+          userId: v.uid || "",
+          name: v.displayName || "",
+          email: v.email || "",
+        };
+        login(userData);
+        console.log('loged', v)
+        navigate("/vote");
+      }
+    });
+    setIsLoading(false);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const handleLogin = () => {
-    navigate("/vote");
-  };
-
-  return <View listCity={city} onLogin={handleLogin} />;
+  return (
+    <View
+      form={form}
+      setForm={setForm}
+      isLoading={isLoading}
+      onLogin={handleLogin}
+      onRegister={() => {
+        navigate("/registration");
+      }}
+    />
+  );
 };
 
 export default LoginPage;

@@ -1,10 +1,21 @@
 import { FC, memo } from "react";
+import { ILogin } from ".";
+import { disabledObject } from "../../utils/validate";
 interface ViewProps {
-  listCity: string[];
   onLogin: () => void;
+  onRegister: () => void;
+  form: ILogin;
+  setForm: React.Dispatch<React.SetStateAction<ILogin>>;
+  isLoading: boolean;
 }
 
-const View: FC<ViewProps> = ({ listCity,onLogin }) => {
+const View: FC<ViewProps> = ({
+  onLogin,
+  onRegister,
+  form,
+  setForm,
+  isLoading,
+}) => {
   return (
     <>
       <div className="h-screen flex items-center justify-center">
@@ -22,11 +33,19 @@ const View: FC<ViewProps> = ({ listCity,onLogin }) => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
               />
             </svg>
 
-            <input type="text" className="grow" placeholder="Daisy" />
+            <input
+              type="text"
+              className="grow"
+              placeholder="Email"
+              value={form.email}
+              onChange={(e) => {
+                setForm({ ...form, email: e.target.value });
+              }}
+            />
           </label>
           <label className="input input-bordered flex items-center gap-2 mb-3">
             <svg
@@ -44,10 +63,35 @@ const View: FC<ViewProps> = ({ listCity,onLogin }) => {
               />
             </svg>
 
-            <input type="text" className="grow" placeholder="daisy@site.com" />
+            <input
+              className="grow"
+              placeholder="Password"
+              type="password"
+              minLength={6}
+              value={form.password}
+              onChange={(e) => {
+                setForm({ ...form, password: e.target.value });
+              }}
+            />
           </label>
+          <div className="my-3 text-sm">
+            Don't have account?,{" "}
+            <a onClick={onRegister} className="text-cyan-500 cursor-pointer">
+              Create new account
+            </a>
+          </div>
           <div className="flex justify-center">
-            <button className="btn btn-wide" onClick={onLogin}>Button</button>
+            <button
+              className="btn btn-wide"
+              disabled={disabledObject(form) || isLoading}
+              onClick={onLogin}
+            >
+              {isLoading ? (
+                <span className="loading loading-spinner loading-md"></span>
+              ) : (
+                "Sign In"
+              )}
+            </button>
           </div>
           {/* {listCity.map((e) => {
               return <p>{e}</p>;
