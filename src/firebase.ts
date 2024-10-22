@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAW64xriJTmr0ZPfDpcK0g7ZMlcd1T68XE",
-  authDomain: "voty-vote.firebaseapp.com",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
   projectId: "voty-vote",
-  storageBucket: "voty-vote.appspot.com",
-  messagingSenderId: "787373301881",
-  appId: "1:787373301881:web:e9e1751e8aa0739c2ab4a8",
-  measurementId: "G-CR0EBR9CC6",
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGE_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID,
 };
 
 // Initialize Firebase
