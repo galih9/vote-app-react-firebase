@@ -14,6 +14,10 @@ export default defineConfig(({ mode }) => {
         plugins: [tailwindcss()],
       },
     },
+    build: {
+      outDir: './build',
+      emptyOutDir: true, // also necessary
+    },
     define: {
       "process.env": env,
     },
