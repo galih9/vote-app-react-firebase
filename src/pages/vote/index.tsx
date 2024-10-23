@@ -61,7 +61,8 @@ const VotePage = () => {
             setLoading(true)
             console.log(users?.data(),e);
             await commenceVote(users?.data().uid, e);
-            setLoading(false)
+            setVoteStatus(true);
+            setLoading(false);
           }
         }
       }}
