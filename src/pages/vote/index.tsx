@@ -3,6 +3,7 @@ import {
   commenceVote,
   getCandidates,
   getCities,
+  getPublishStatus,
   getUserDetail,
 } from "../../services/firebase";
 import View from "./view";
@@ -12,33 +13,43 @@ export interface ICandidates {
   name: string;
   img: string;
   voteCount: number;
+  visi?: string;
+  misi?: string;
 }
 
 const VotePage = () => {
   const [candidates, setCandidates] = useState<ICandidates[]>([]);
   const [voteStatus, setVoteStatus] = useState(false);
   const [voteLoading, setLoading] = useState(false);
+  const [published, setPublished] = useState(false);
 
   const { getUserId } = useUser();
 
   const fetchData = async () => {
-    const data = await getCandidates();
-    var datas: ICandidates[] = [];
-    const id = getUserId();
-    if (id) {
-      const users = await getUserDetail(id);
-      setVoteStatus(users?.data().voteStatus ?? false);
-    }
-    for (let i = 0; i < data.length; i++) {
-      const element = data[i];
-      datas.push({
-        name: element.name,
-        img: element.img,
-        voteCount: element.voteCount,
-      });
-    }
+    const stat = await getPublishStatus();
+    setPublished(stat);
+    console.log(stat);
+    if (!stat) {
+      const data = await getCandidates();
+      var datas: ICandidates[] = [];
+      const id = getUserId();
+      if (id) {
+        const users = await getUserDetail(id);
+        setVoteStatus(users?.data().voteStatus ?? false);
+      }
+      for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        datas.push({
+          name: element.name,
+          img: element.img,
+          voteCount: element.voteCount,
+        });
+      }
 
-    setCandidates(datas);
+      setCandidates(datas);
+    } else {
+      setVoteStatus(true);
+    }
   };
 
   useEffect(() => {
@@ -47,6 +58,7 @@ const VotePage = () => {
 
   return (
     <View
+      published={published}
       listCandidates={candidates}
       voteStatus={voteStatus}
       onRevote={() => {
@@ -58,8 +70,7 @@ const VotePage = () => {
         if (id) {
           const users = await getUserDetail(id);
           if (users) {
-            setLoading(true)
-            console.log(users?.data(),e);
+            setLoading(true);
             await commenceVote(users?.data().uid, e);
             setVoteStatus(true);
             setLoading(false);

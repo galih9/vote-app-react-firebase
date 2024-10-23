@@ -73,6 +73,26 @@ export async function commenceVote(dcId: string, vote_id: string) {
   });
 }
 
+export async function getPublishStatus() {
+  const settingColl = collection(db, "settings");
+  const useSnapshot = await getDocs(settingColl);
+  const setting = useSnapshot.docs[0];
+  return setting?.data().publishStatus ?? false;
+}
+
+export async function setPublishStatus(value: boolean) {
+  const settingColl = collection(db, "settings");
+  const useSnapshot = await getDocs(settingColl);
+  const setting = useSnapshot.docs[0];
+
+  const data = {
+    publishStatus: value,
+    winner_id: "",
+  };
+
+  await setDoc(doc(db, "settings", setting.id), data);
+}
+
 export const logInWithEmailAndPassword = async (
   email: string,
   password: string
@@ -111,7 +131,7 @@ export const registerWithEmailAndPassword = async (
     await setDoc(doc(db, "users", res.user.uid), userData);
     if (auth.currentUser != null) {
       await updateProfile(auth.currentUser, { displayName: name }).catch(
-        (err) => console.log(err)
+        (err) => console.error(err)
       );
     }
     toast.success("Registered Successfully");

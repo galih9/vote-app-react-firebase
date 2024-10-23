@@ -6,6 +6,8 @@ import VotePage from "../pages/vote";
 import RegistrationPage from "../pages/registration";
 import Layout from "../components/layout/toolbar";
 import VoterStatusPage from "../pages/voter";
+import CandidatesPage from "../pages/candidates";
+import SettingsPage from "../pages/admin/settings";
 
 const AppAuthenticatedPage = () => {
   return (
@@ -25,6 +27,22 @@ const AppAuthenticatedPage = () => {
         element={
           <Layout>
             <VoterStatusPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/candidates"
+        element={
+          <Layout>
+            <CandidatesPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <Layout>
+            <SettingsPage />
           </Layout>
         }
       />

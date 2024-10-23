@@ -43,7 +43,7 @@ const Layout: FC<LayoutProps> = memo(({ children }) => {
             </div>
             <div className="mx-2 flex-1 px-2 cursor-pointer">
               <a
-              className="text-white"
+                className="text-white"
                 onClick={() => {
                   navigate("/vote");
                 }}
@@ -79,7 +79,12 @@ const Layout: FC<LayoutProps> = memo(({ children }) => {
                   className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[10] mt-3 w-52 p-2 shadow"
                 >
                   <li>
-                    <a className="justify-between">
+                    <a
+                      className="justify-between"
+                      onClick={() => {
+                        navigate("/candidates");
+                      }}
+                    >
                       Candidates List
                       <span className="badge">New</span>
                     </a>
@@ -94,7 +99,13 @@ const Layout: FC<LayoutProps> = memo(({ children }) => {
                     </a>
                   </li>
                   <li>
-                    <a>Settings</a>
+                    <a
+                      onClick={() => {
+                        navigate("/settings");
+                      }}
+                    >
+                      Settings
+                    </a>
                   </li>
                   <li>
                     <a
@@ -123,10 +134,44 @@ const Layout: FC<LayoutProps> = memo(({ children }) => {
           <ul className="menu bg-base-200 min-h-full w-80 p-4">
             {/* Sidebar content here */}
             <li>
-              <a>Sidebar Item 1</a>
+              <a
+                className="justify-between"
+                onClick={() => {
+                  navigate("/candidates");
+                }}
+              >
+                Candidates List
+                <span className="badge">New</span>
+              </a>
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              <a
+                onClick={() => {
+                  navigate("/voter");
+                }}
+              >
+                Check voter status
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => {
+                  navigate("/settings");
+                }}
+              >
+                Settings
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={async () => {
+                  logoutFirebase();
+                  navigate("/");
+                  toast.success("Logout Successfully.");
+                }}
+              >
+                Logout
+              </a>
             </li>
           </ul>
         </div>

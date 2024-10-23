@@ -30,7 +30,6 @@ const LoginPage = () => {
           email: v.email || "",
         };
         login(userData);
-        console.log('loged', v)
         navigate("/vote");
       }
     });

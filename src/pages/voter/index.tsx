@@ -14,8 +14,10 @@ export interface IVoter {
 
 const VoterStatusPage = () => {
   const [candidates, setCandidates] = useState<IVoter[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const fetchData = async () => {
+    setLoading(true);
     const data = await getUsersVote();
     var datas: IVoter[] = [];
     for (let i = 0; i < data.length; i++) {
@@ -27,13 +29,14 @@ const VoterStatusPage = () => {
       });
     }
     setCandidates(datas);
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  return <View listVoter={candidates} />;
+  return <View listVoter={candidates} isLoading={isLoading} />;
 };
 
 export default VoterStatusPage;
