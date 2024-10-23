@@ -1,7 +1,7 @@
-import { getCandidates } from "../../services/firebase";
-import { ICandidates } from "../vote";
+import { getCandidates } from "@services/firebase";
 import View from "./view";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { ICandidates } from "@interface/vote";
 
 const CandidatesPage = () => {
   const [candidates, setCandidates] = useState<ICandidates[]>([]);

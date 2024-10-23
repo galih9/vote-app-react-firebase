@@ -1,8 +1,7 @@
 
 import { Route, Routes } from "react-router-dom";
-import React from "react";
-import Login from "../pages/login";
-import Blank from "../pages/beta/blank";
+import Login from "@pages/login";
+import Blank from "@pages/beta/blank";
 
 const AppUnauthenticatedPage = () => {
   return (

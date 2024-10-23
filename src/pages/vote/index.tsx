@@ -1,21 +1,13 @@
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "@hooks/useUser";
 import {
   commenceVote,
   getCandidates,
-  getCities,
   getPublishStatus,
   getUserDetail,
-} from "../../services/firebase";
+} from "@services/firebase";
 import View from "./view";
-import React, { useEffect, useState } from "react";
-
-export interface ICandidates {
-  name: string;
-  img: string;
-  voteCount: number;
-  visi?: string;
-  misi?: string;
-}
+import { useEffect, useState } from "react";
+import { ICandidates } from "@interface/vote";
 
 const VotePage = () => {
   const [candidates, setCandidates] = useState<ICandidates[]>([]);

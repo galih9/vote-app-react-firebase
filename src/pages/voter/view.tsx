@@ -1,6 +1,5 @@
+import { IVoter } from "@interface/vote";
 import { FC, memo } from "react";
-import { IVoter } from ".";
-import useWindowDimensions from "../../utils/get_window";
 interface ViewProps {
   listVoter: IVoter[];
   isLoading: boolean;

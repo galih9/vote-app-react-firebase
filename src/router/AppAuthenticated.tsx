@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import React from "react";
-import Blank from "../pages/beta/blank";
-import Login from "../pages/login";
-import VotePage from "../pages/vote";
-import RegistrationPage from "../pages/registration";
 import Layout from "../components/layout/toolbar";
-import VoterStatusPage from "../pages/voter";
-import CandidatesPage from "../pages/candidates";
-import SettingsPage from "../pages/admin/settings";
+// pages
+import Blank from "@pages/beta/blank";
+import Login from "@pages/login";
+import VotePage from "@pages/vote";
+import RegistrationPage from "@pages/registration";
+import VoterStatusPage from "@pages/voter";
+import CandidatesPage from "@pages/candidates";
+import SettingsPage from "@pages/admin/settings";
 
 const AppAuthenticatedPage = () => {
   return (

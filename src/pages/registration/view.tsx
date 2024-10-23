@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
-import { IRegister } from ".";
-import { disabledObject } from "../../utils/validate";
+import { disabledObject } from "@utils/validate";
+import { IRegister } from "@interface/auth";
 interface ViewProps {
   onLogin: () => void;
   onRegister: () => void;

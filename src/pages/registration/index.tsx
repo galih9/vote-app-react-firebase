@@ -1,18 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import {
-  getCities,
-  registerWithEmailAndPassword,
-} from "../../services/firebase";
+import { registerWithEmailAndPassword } from "@services/firebase";
 import View from "./view";
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-
-export interface IRegister {
-  name: string;
-  password: string;
-  email: string;
-  password2: string;
-}
+import { useState } from "react";
+import { useAuth } from "@hooks/useAuth";
+import { IRegister } from "@interface/auth";
 
 const RegistrationPage = () => {
   const [form, setForm] = useState<IRegister>({
@@ -37,7 +28,7 @@ const RegistrationPage = () => {
         userId: user.uid ?? "",
         name: user.displayName ?? "",
         email: user.email ?? "",
-        voteStatus: null
+        voteStatus: null,
       });
       navigate("/vote");
     }

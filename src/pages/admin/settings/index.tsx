@@ -1,13 +1,8 @@
 import toast from "react-hot-toast";
-import { getPublishStatus, setPublishStatus } from "../../../services/firebase";
+import { getPublishStatus, setPublishStatus } from "@services/firebase";
 import View from "./view";
-import React, { useEffect, useState } from "react";
-
-export interface IVoter {
-  name: string;
-  email: string;
-  voteStatus: boolean;
-}
+import { useEffect, useState } from "react";
+import { IVoter } from "@interface/vote";
 
 const SettingsPage = () => {
   const [candidates, setCandidates] = useState<IVoter[]>([]);
@@ -22,6 +17,7 @@ const SettingsPage = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  
   return (
     <View
       listVoter={candidates}
@@ -30,7 +26,7 @@ const SettingsPage = () => {
       setPublished={async () => {
         setLoading(true);
         await setPublishStatus(!isPublished);
-        toast.success("Published");
+        toast.success(isPublished ? "Unpublished" : "Published");
         setLoading(false);
         setPublished(!isPublished);
       }}

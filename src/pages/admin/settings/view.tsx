@@ -1,5 +1,7 @@
+import { DailyStars, data, IVoter } from "@interface/vote";
+import React from "react";
 import { FC, memo } from "react";
-import { IVoter } from ".";
+import { AxisOptions, Chart } from "react-charts";
 
 interface ViewProps {
   listVoter: IVoter[];
@@ -14,6 +16,21 @@ const View: FC<ViewProps> = ({
   isPublished,
   setPublished,
 }) => {
+  const primaryAxis = React.useMemo(
+    (): AxisOptions<DailyStars> => ({
+      getValue: (datum) => datum.contestant,
+      elementType: "bar",
+    }),
+    []
+  );
+
+  const secondaryAxes = React.useMemo(
+    (): AxisOptions<DailyStars>[] => [
+      { hardMin: 0, getValue: (datum) => datum.stars },
+    ],
+    []
+  );
+
   return (
     <>
       <div className="mt-24 flex items-center justify-center">
@@ -43,6 +60,20 @@ const View: FC<ViewProps> = ({
             </li>
           </ul>
         </div>
+      </div>
+      <div className="w-4/5 h-96 my-8 border border-1 border-emerald-300 rounded-xl mx-3 overflow-x-auto">
+        <Chart
+          options={{
+            data,
+            primaryAxis,
+            secondaryAxes,
+            getDatumStyle: (e, i) => {
+              return {
+                color: e.originalDatum.color,
+              };
+            },
+          }}
+        />
       </div>
     </>
   );

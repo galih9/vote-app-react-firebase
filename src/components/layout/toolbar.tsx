@@ -1,9 +1,8 @@
 import { FC, memo, ReactNode } from "react";
-import { logoutFirebase } from "../../services/firebase";
+import { logoutFirebase } from "@services/firebase";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useAuth } from "../../hooks/useAuth";
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "@hooks/useUser";
 
 interface LayoutProps {
   children: ReactNode;

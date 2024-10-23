@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { ICandidates } from ".";
-import useWindowDimensions from "../../utils/get_window";
+import useWindowDimensions from "@utils/get_window";
 import Confetti from "react-confetti";
 interface ViewProps {
   listCandidates: ICandidates[];
@@ -26,7 +26,9 @@ const View: FC<ViewProps> = ({
       {/* Page content here */}
       <div className="mt-24 flex items-center justify-center">
         <div className="bg-blue-200 md:px-1 py-5  rounded-md mx-auto md:m-3">
-          <h2 className="mb-3 text-center font-bold text-xl">VOTE</h2>
+          <h2 className="mb-3 text-center font-bold text-xl">
+            VOTE{voteStatus && published && " RESULT"}
+          </h2>
           {voteStatus ? (
             published ? (
               <div className="gap-y-4">

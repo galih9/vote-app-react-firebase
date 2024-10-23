@@ -1,12 +1,6 @@
 import { FC, ReactNode, memo } from "react";
 import { useNavigate } from "react-router-dom";
-import React from "react";
-
-type ICaption = {
-  title: string;
-  desc: string;
-  img: string;
-};
+import { ICaption } from "@interface/auth";
 
 const BlankPage: FC<{ text?: string }> = ({ text }) => {
   const navigate = useNavigate();

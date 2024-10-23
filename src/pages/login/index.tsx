@@ -1,13 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { getCities, logInWithEmailAndPassword } from "../../services/firebase";
+import { logInWithEmailAndPassword } from "@services/firebase";
 import View from "./view";
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-
-export interface ILogin {
-  email: string;
-  password: string;
-}
+import { useState } from "react";
+import { useAuth } from "@hooks/useAuth";
+import { ILogin } from "@interface/auth";
 
 const LoginPage = () => {
   const [form, setForm] = useState<ILogin>({
